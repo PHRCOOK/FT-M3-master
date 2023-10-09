@@ -1,4 +1,5 @@
 const process = require('process');
+const {Z_AZCII} = require ('zlib')
 const commands = require('./commands/index.js');
 
 // Función para imprimir el resultado en la consola
