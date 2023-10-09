@@ -20,7 +20,7 @@ function echo(print, args) {
 // Lista los archivos y directorios en el directorio actual
 function ls(print) {
     fs.readdir('.', (error, files) => {
-        if (error) throw error;
+        if (error) throw new Error (error);
         print(files.join(' '));
     });
 }
