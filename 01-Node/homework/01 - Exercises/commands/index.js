@@ -28,7 +28,7 @@ function ls(print) {
 // Muestra el contenido de un archivo
 function cat(print, args) {
     fs.readFile(args, 'utf-8', (error, data) => {
-        if (error) throw error;
+        if (error) throw new Error (error);
         print(data);
     });
 }
@@ -36,7 +36,7 @@ function cat(print, args) {
 // Muestra la primera línea de un archivo
 function head(print, args) {
     fs.readFile(args, 'utf-8', (error, data) => {
-        if (error) throw error;
+        if (error) throw new Error (error);
         const lines = data.split('\n');
         print(lines[0]);
     });
@@ -45,7 +45,7 @@ function head(print, args) {
 // Muestra la última línea de un archivo
 function tail(print, args) {
     fs.readFile(args, 'utf-8', (error, data) => {
-        if (error) throw error;
+        if (error) throw new Error (error);
         const lines = data.split('\n');
         print(lines[lines.length - 1].trim());
     });
@@ -54,7 +54,7 @@ function tail(print, args) {
 // Realiza una solicitud HTTP a una URL y muestra la respuesta
 function curl(print, args) {
     utils.request(args, (error, response) => {
-        if (error) throw error;
+        if (error) throw new Error (error);
         print(response);
     });
 }
