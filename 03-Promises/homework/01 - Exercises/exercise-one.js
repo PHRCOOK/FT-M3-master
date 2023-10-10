@@ -20,7 +20,7 @@ args.forEach(function (arg) {
 
 function problemA() {
   // callback version
-  exerciseUtils.readFile("poem-one/stanza-02.txt", function (err, stanza2) {
+ exerciseUtils.readFile("poem-one/stanza-02.txt", function (err, stanza2) {
     exerciseUtils.blue(stanza2);
     exerciseUtils.readFile("poem-one/stanza-03.txt", function (err, stanza3) {
       exerciseUtils.blue(stanza3);
@@ -29,6 +29,19 @@ function problemA() {
 
   // promise version
   // Tu código acá:
+  exerciseUtils.promisifiedReadFile("poem-one/stanza-02.txt")
+    .then(function(stanza2) {
+      exerciseUtils.blue(stanza2);
+      return exerciseUtils.promisifiedReadFile("poem-one/stanza-03.txt");
+    })
+    .then(function(stanza3) {
+      exerciseUtils.blue(stanza3);
+      exerciseUtils.blue("done");
+    })
+    .catch(function(err) {
+      exerciseUtils.magenta(new Error(err));
+    });
+  
 }
 
 function problemB() {
@@ -43,11 +56,18 @@ function problemB() {
 
   // promise version
   // Tu código acá:
+   exerciseUtils.promisifiedReadFile("poem-one/wrong-file-name.txt")
+    .then(function(stanza4) {
+      exerciseUtils.blue(stanza4);
+    })
+    .catch(function(err) {
+      exerciseUtils.magenta(new Error(err));
+    });
 }
 
 function problemC() {
   // callback version
-  exerciseUtils.readFile("poem-one/stanza-03.txt", function (err, stanza3) {
+ exerciseUtils.readFile("poem-one/stanza-03.txt", function (err, stanza3) {
     if (err) return exerciseUtils.magenta(new Error(err));
     exerciseUtils.blue(stanza3);
     exerciseUtils.readFile(
@@ -61,4 +81,15 @@ function problemC() {
 
   // promise version
   // Tu código acá:
+   exerciseUtils.promisifiedReadFile("poem-one/stanza-03.txt")
+    .then(function(stanza3) {
+      exerciseUtils.blue(stanza3);
+      return exerciseUtils.promisifiedReadFile("poem-one/stanza-04.txt");
+    })
+    .then(function(stanza4) {
+      exerciseUtils.blue(stanza4);
+    })
+    .catch(function(err) {
+      exerciseUtils.magenta(new Error(err));
+    });
 }
