@@ -8,7 +8,7 @@ let args = process.argv.slice(2).map(function (st) {
 
 module.exports = {
   problemAx: problemA,
-  problemBx: problemB
+  problemBx: problemB,
 };
 
 // corre cada problema dado como un argumento del command-line para procesar
@@ -28,7 +28,8 @@ function problemA() {
 
   // promise version
   // Tu código acá:
-   exerciseUtils.promisifiedReadFile("poem-two/stanza-01.txt")
+  exerciseUtils
+    .promisifiedReadFile("poem-two/stanza-01.txt")
     .then((stanza1) => {
       exerciseUtils.blue(stanza1);
       return exerciseUtils.promisifiedReadFile("poem-two/stanza-02.txt");
@@ -39,7 +40,6 @@ function problemA() {
     .catch((err) => {
       exerciseUtils.magenta(new Error(err));
     });
-  
 }
 
 function problemB() {
@@ -61,7 +61,8 @@ function problemB() {
   // Tu código acá:
   const readFilePromisified = (filename) => {
     return new Promise((resolve, reject) => {
-      exerciseUtils.promisifiedReadFile(filename)
+      exerciseUtils
+        .promisifiedReadFile(filename)
         .then((stanza) => {
           exerciseUtils.blue(stanza);
           resolve();
@@ -75,20 +76,25 @@ function problemB() {
 
   Promise.all(filenames.map(readFilePromisified))
     .then(() => {
-      console.log('done');
+      console.log("done");
     })
     .catch((err) => {
-      console.log('Error:', err);
+      console.log("Error:", err);
     });
-  
-  
 }
 
 // EJERCICIO EXTRA
 function problemC() {
   let fs = require("fs");
   function promisifiedWriteFile(filename, str) {
-    // tu código acá:
-    
+    return new Promise((resolve, reject) => {
+      fs.writeFile(filename, str, (error) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve("Archivo escrito exitosamente");
+        }
+      });
+    });
   }
 }
