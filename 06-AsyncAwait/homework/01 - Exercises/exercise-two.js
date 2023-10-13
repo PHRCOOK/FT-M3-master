@@ -21,7 +21,7 @@ args.forEach(function (arg) {
 
 async function problemA() {
   // callback version
-  exerciseUtils.readFile("poem-one/stanza-01.txt", function (err, stanza) {
+ exerciseUtils.readFile("poem-one/stanza-01.txt", function (err, stanza) {
     exerciseUtils.blue(stanza);
   });
   exerciseUtils.readFile("poem-one/stanza-02.txt", function (err, stanza) {
@@ -30,6 +30,17 @@ async function problemA() {
 
   // async await version
   // Tu código acá:
+  const promises = [
+    exerciseUtils.promisifiedReadFile("poem-two/stanza-01.txt"),
+    exerciseUtils.promisifiedReadFile("poem-two/stanza-02.txt")
+  ];
+
+  await Promise.all(promises.map(promise => promise.then(exerciseUtils.blue)));
+
+  console.log('done');
+  
+
+
 }
 
 async function problemB() {
@@ -38,7 +49,7 @@ async function problemB() {
   });
 
   // callback version
-  filenames.forEach((filename) => {
+ filenames.forEach((filename) => {
     exerciseUtils.readFile(filename, function (err, stanza) {
       exerciseUtils.blue(stanza);
     });
@@ -46,6 +57,14 @@ async function problemB() {
 
   // async await version
   // Tu código acá:
+
+  try {
+    let stanzas = await Promise.all(filenames.map(filename => exerciseUtils.promisifiedReadFile(filename)));
+    stanzas.forEach(stanza => exerciseUtils.blue(stanza));
+    console.log('done');
+  } catch (err) {
+    console.error(err);
+  }
 }
 
 async function problemC() {
@@ -62,6 +81,16 @@ async function problemC() {
 
   // async await version
   // Tu código acá:
+   
+  try {
+    for (let filename of filenames) {
+      let stanza = await exerciseUtils.promisifiedReadFile(filename);
+      exerciseUtils.blue(stanza);
+    }
+    console.log('done');
+  } catch (err) {
+    console.error(err);
+  }
 }
 
 async function problemD() {
@@ -81,4 +110,19 @@ async function problemD() {
 
   // async await version
   // Tu código acá:
+  
+  
+  try {
+    for (let filename of filenames) {
+      try {
+        let stanza = await exerciseUtils.promisifiedReadFile(filename);
+        exerciseUtils.blue(stanza);
+      } catch (err) {
+        exerciseUtils.magenta(new Error(err));
+      }
+    }
+    console.log('done');
+  } catch (err) {
+    console.error(err);
+  }
 }
